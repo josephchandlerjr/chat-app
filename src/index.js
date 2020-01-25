@@ -16,10 +16,8 @@ const viewsPath  = path.join(__dirname, '../templates')
 app.use(express.static(publicPath))
 app.set('views', viewsPath)
 
-app.set('view engine', 'ejs')
-
-app.get('/', (req, res) => {
-	res.render('index')
+io.on('connection', () => {
+	console.log('New WebSocket connection')
 })
 
 server.listen(port, () => console.log(`Listening on port ${port}`))
