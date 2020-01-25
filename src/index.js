@@ -1,8 +1,11 @@
  const express 	= require('express'),
  	   app		= express(),
  	   path		= require('path'),
+ 	   http		= require('http'),
  	   port		= process.env.PORT || 3000
 
+
+const server = http.createServer(app)
 
 const publicPath = path.join(__dirname, '../public')
 const viewsPath  = path.join(__dirname, '../templates')
@@ -16,4 +19,4 @@ app.get('/', (req, res) => {
 	res.render('index')
 })
 
-app.listen(port, () => console.log(`Listening on port ${port}`))
+server.listen(port, () => console.log(`Listening on port ${port}`))
