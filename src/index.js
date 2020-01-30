@@ -3,6 +3,7 @@
  	   path		= require('path'),
  	   http		= require('http'),
  	   socketio	= require('socket.io'),
+ 	   Filter	= require('bad-words'),
  	   port		= process.env.PORT || 3000
 
 
