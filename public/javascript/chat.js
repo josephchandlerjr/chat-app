@@ -10,7 +10,7 @@ document.querySelector('#message-form').addEventListener('submit', (evt) => {
 	evt.preventDefault()
 
 	const clientMessageText = evt.target.elements.message // use name of input field to accessed it on elements obj
- 	socket.emit('sendMessage', clientMessageText.value)
+ 	socket.emit('sendMessage', clientMessageText.value, (msg) => console.log('The message was delivered', msg))
 })
 
 document.querySelector('#send-location').addEventListener('click', () => {

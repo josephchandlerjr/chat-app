@@ -21,8 +21,9 @@ io.on('connection', (socket) => {
 	socket.emit('message', 'welcome') // just this client
 
 	socket.broadcast.emit('message', 'A new user has joined') // all clients but this socket
-	socket.on('sendMessage', (msg) => {
+	socket.on('sendMessage', (msg, callback) => {
 		io.emit('message', msg) // every client
+		callback('delivered')
 	})
 
 	socket.on('disconnect', (socket) => {
