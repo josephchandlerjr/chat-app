@@ -20,6 +20,6 @@ document.querySelector('#send-location').addEventListener('click', () => {
 
 	navigator.geolocation.getCurrentPosition( (position) => {  //asyncronous but currently doesn't support promises
 		let {latitude, longitude} = position.coords
-		console.log(latitude, longitude)
+		socket.emit('sendMessage', `Location: ${longitude}, ${latitude}`)
 	}) 
 })
