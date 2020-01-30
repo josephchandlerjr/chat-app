@@ -4,6 +4,7 @@
  	   http		= require('http'),
  	   socketio	= require('socket.io'),
  	   Filter	= require('bad-words'),
+ 	   filter 	= new Filter(),
  	   port		= process.env.PORT || 3000
 
 
@@ -23,8 +24,13 @@ io.on('connection', (socket) => {
 
 	socket.broadcast.emit('message', 'A new user has joined') // all clients but this socket
 	socket.on('sendMessage', (msg, callback) => {
-		io.emit('message', msg) // every client
-		callback('delivered')
+		if(!filter.isProfane(msg)) {
+			io.emit('message', msg) // every client
+			callback()
+		} else {
+			callback('Message rejected due to profanity.')
+		}
+		
 	})
 
 	socket.on('disconnect', (socket) => {
