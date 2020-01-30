@@ -16,8 +16,20 @@ const viewsPath  = path.join(__dirname, '../templates')
 app.use(express.static(publicPath))
 app.set('views', viewsPath)
 
-io.on('connection', () => {
-	console.log('New WebSocket connection')
+
+io.on('connection', (socket) => {
+	socket.emit('message', 'welcome') // just this client
+
+	socket.broadcast.emit('message', 'A new user has joined') // all clients but this socket
+	socket.on('sendMessage', (msg) => {
+		io.emit('message', msg) // every client
+	})
+
+	socket.on('disconnect', (socket) => {
+		io.emit('message', 'A user has left')
+	})
 })
+
+
 
 server.listen(port, () => console.log(`Listening on port ${port}`))
