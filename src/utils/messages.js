@@ -1,7 +1,7 @@
 const generateMessage = (text) =>{
 	return {
 		text,
-		createAt: new Date().getTime()
+		createdAt: new Date().getTime()
 	}
 }
 
