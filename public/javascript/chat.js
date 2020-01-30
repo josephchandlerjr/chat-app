@@ -20,7 +20,6 @@ $messageForm.addEventListener('submit', (evt) => {
 
 	const clientMessageText = evt.target.elements.message // use name of input field to accessed it on elements obj
 
-
  	socket.emit('sendMessage', clientMessageText.value, (error) => {
  		//clear input form and focus on it
 		$messageFormInput.value = ''
@@ -32,8 +31,6 @@ $messageForm.addEventListener('submit', (evt) => {
 
  		//re-enable
  		$messageFormButton.removeAttribute('disabled')
-
-
  	})
 })
 
