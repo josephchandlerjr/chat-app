@@ -5,7 +5,7 @@
  	   socketio	= require('socket.io'),
  	   Filter	= require('bad-words'),
  	   filter 	= new Filter(),
- 	   {generateMessage} = require('./utils/messages'),
+ 	   {generateMessage, generateLocationMessage } = require('./utils/messages'),
  	   port		= process.env.PORT || 3000
 
 
@@ -38,7 +38,7 @@ io.on('connection', (socket) => { // just to this client
 	})
 
 	socket.on('sendLocation', (coords, callback) => {
-		io.emit('locationMessage', `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`)
+		io.emit('locationMessage', generateLocationMessage(coords))
 		callback('Location shared!')
 	})
 })
