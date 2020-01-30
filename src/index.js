@@ -5,7 +5,7 @@
  	   socketio	= require('socket.io'),
  	   Filter	= require('bad-words'),
  	   filter 	= new Filter(),
- 	   generateMessage = require('./utils/messages'),
+ 	   {generateMessage} = require('./utils/messages'),
  	   port		= process.env.PORT || 3000
 
 
@@ -22,11 +22,11 @@ app.set('views', viewsPath)
 
 io.on('connection', (socket) => { // just to this client
 	socket.emit('message', generateMessage('Welcome!')) 
-	socket.broadcast.emit('message', 'A new user has joined') // all clients but this socket
+	socket.broadcast.emit('message', generateMessage('A new user has joined')) // all clients but this socket
 
 	socket.on('sendMessage', (msg, callback) => {
 		if(!filter.isProfane(msg)) {
-			io.emit('message', msg) // every client
+			io.emit('message', generateMessage(msg)) // every client
 			callback()
 		} else {
 			callback('Message rejected due to profanity.')
@@ -34,7 +34,7 @@ io.on('connection', (socket) => { // just to this client
 	})
 
 	socket.on('disconnect', (socket) => {
-		io.emit('message', 'A user has left')
+		io.emit('message', generateMessage('A user has left'))
 	})
 
 	socket.on('sendLocation', (coords, callback) => {

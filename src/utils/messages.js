@@ -5,4 +5,4 @@ const generateMessage = (text) =>{
 	}
 }
 
-module.exports = generateMessage
+module.exports = { generateMessage }

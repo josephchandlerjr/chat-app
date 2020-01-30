@@ -13,7 +13,7 @@ const locationTemplate = document.querySelector('#location-template').innerHTML
 
 
 socket.on('message', (message) => { 
-	const html = Mustache.render(messageTemplate, {message})
+	const html = Mustache.render(messageTemplate, {message: message.text})
 	$messages.insertAdjacentHTML('beforeend', html)
 })
 
