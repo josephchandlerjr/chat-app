@@ -25,6 +25,7 @@ socket.on('locationMessage', (url) => {
 	$messages.insertAdjacentHTML('beforeend', html)
 })
 
+// when submited emit 'sendMessage' event
 $messageForm.addEventListener('submit', (evt) => {
 	evt.preventDefault()
 	// disable
@@ -46,6 +47,7 @@ $messageForm.addEventListener('submit', (evt) => {
  	})
 })
 
+// when clicked get geolocation with a callback that emits 'sendLocation'
 $sendLocationButton.addEventListener('click', () => {
 	$sendLocationButton.setAttribute('disabled', 'disabled')
 	if (!navigator.geolocation) {
