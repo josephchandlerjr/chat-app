@@ -29,8 +29,8 @@ io.on('connection', (socket) => { // just to this client
 			return callback(error)
 		}
 		socket.join(user.room)
-		socket.emit('message', generateMessage(user.username, 'Welcome!')) 
-		socket.broadcast.to(user.room).emit('message', generateMessage(user.username, `${user.username} has joined.`)) // all clients but this socket
+		socket.emit('message', generateMessage('Admin', 'Welcome!')) 
+		socket.broadcast.to(user.room).emit('message', generateMessage('Admin', `${user.username} has joined.`)) // all clients but this socket
 
 		callback()
 
