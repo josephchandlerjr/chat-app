@@ -23,7 +23,6 @@ socket.on('message', (message) => {
 })
 
 socket.on('locationMessage', (location) => {
-	console.log(location)
 	const html = Mustache.render(locationTemplate, {
 		url: location.url,
 		createdAt: moment(location.createdAt).format('h:mm a')
@@ -45,7 +44,7 @@ $messageForm.addEventListener('submit', (evt) => {
 		$messageFormInput.focus()
 
  		if (error) {
- 			console.log(error)
+ 			alert(error)
  		}
 
  		//re-enable
