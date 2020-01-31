@@ -15,8 +15,10 @@ const locationTemplate = document.querySelector('#location-template').innerHTML
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
 socket.on('message', (message) => { 
+	console.log(message)
 	const html = Mustache.render(messageTemplate, {
 		message: message.text,
+		username: message.username,
 		createdAt: moment(message.createdAt).format('h:mm a')
 	})
 	$messages.insertAdjacentHTML('beforeend', html)
@@ -25,6 +27,7 @@ socket.on('message', (message) => {
 socket.on('locationMessage', (location) => {
 	const html = Mustache.render(locationTemplate, {
 		url: location.url,
+		username: location.username,
 		createdAt: moment(location.createdAt).format('h:mm a')
 	})
 	$messages.insertAdjacentHTML('beforeend', html)

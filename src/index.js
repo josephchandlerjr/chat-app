@@ -29,9 +29,8 @@ io.on('connection', (socket) => { // just to this client
 			return callback(error)
 		}
 		socket.join(user.room)
-
-		socket.emit('message', generateMessage('Welcome!')) 
-		socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined.`)) // all clients but this socket
+		socket.emit('message', generateMessage(user.username, 'Welcome!')) 
+		socket.broadcast.to(user.room).emit('message', generateMessage(user.username, `${user.username} has joined.`)) // all clients but this socket
 
 		callback()
 
@@ -43,7 +42,7 @@ io.on('connection', (socket) => { // just to this client
 	socket.on('sendMessage', (msg, callback) => {
 		const user = getUser(socket.id)
 		if(!filter.isProfane(msg)) {
-			io.to(user.room).emit('message', generateMessage(msg)) // every client
+			io.to(user.room).emit('message', generateMessage(user.username, msg)) // every client
 			callback()
 		} else {
 			callback('Message rejected due to profanity.')
@@ -53,14 +52,14 @@ io.on('connection', (socket) => { // just to this client
 	socket.on('disconnect', () => {
 		const user = removeUser(socket.id)
 		if (user) {
-			io.to(user.room).emit('message', generateMessage(`${user.username} has left`))
+			io.to(user.room).emit('message', generateMessage(user.username, `${user.username} has left`))
 		}
 		
 	})
 
 	socket.on('sendLocation', (coords, callback) => {
 		const user = getUser(socket.id)
-		io.to(user.room).emit('locationMessage', generateLocationMessage(coords))
+		io.to(user.room).emit('locationMessage', generateLocationMessage(user.username, coords))
 		callback('Location shared!')
 	})
 })
