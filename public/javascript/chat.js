@@ -69,3 +69,5 @@ $sendLocationButton.addEventListener('click', () => {
 		})
 	}) 
 })
+
+socket.emit('join', { username, room })
