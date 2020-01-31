@@ -23,11 +23,18 @@ app.set('views', viewsPath)
 
 io.on('connection', (socket) => { // just to this client
 
-	socket.on('join', ( { username, room }) => {
-		socket.join(room)
+	socket.on('join', (options, callback) => {
+		const { error, user } = addUser({ id: socket.id, ...options })
+		if (error) {
+			return callback(error)
+		}
+		console.log(user.room)
+		socket.join(user.room)
 
 		socket.emit('message', generateMessage('Welcome!')) 
-		socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined.`)) // all clients but this socket
+		socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined.`)) // all clients but this socket
+
+		callback()
 
 		//socket.emit, io.emit, socket,broadcast.emit
 		// when dealing with rooms use these two
@@ -35,8 +42,9 @@ io.on('connection', (socket) => { // just to this client
 	})
 
 	socket.on('sendMessage', (msg, callback) => {
+		const user = getUser(socket.id)
 		if(!filter.isProfane(msg)) {
-			io.emit('message', generateMessage(msg)) // every client
+			io.to(user.room).emit('message', generateMessage(msg)) // every client
 			callback()
 		} else {
 			callback('Message rejected due to profanity.')
