@@ -28,7 +28,6 @@ io.on('connection', (socket) => { // just to this client
 		if (error) {
 			return callback(error)
 		}
-		console.log(user.room)
 		socket.join(user.room)
 
 		socket.emit('message', generateMessage('Welcome!')) 
@@ -51,8 +50,12 @@ io.on('connection', (socket) => { // just to this client
 		}
 	})
 
-	socket.on('disconnect', (socket) => {
-		io.emit('message', generateMessage('A user has left'))
+	socket.on('disconnect', () => {
+		const user = removeUser(socket.id)
+		if (user) {
+			io.to(user.room).emit('message', generateMessage(`${user.username} has left`))
+		}
+		
 	})
 
 	socket.on('sendLocation', (coords, callback) => {
