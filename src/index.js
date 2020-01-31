@@ -26,7 +26,7 @@ io.on('connection', (socket) => { // just to this client
 		socket.join(room)
 
 		socket.emit('message', generateMessage('Welcome!')) 
-		socket.broadcast.to(room).emit('message', generateMessage('A new user has joined')) // all clients but this socket
+		socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined.`)) // all clients but this socket
 
 		//socket.emit, io.emit, socket,broadcast.emit
 		// when dealing with rooms use these two
