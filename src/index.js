@@ -6,6 +6,7 @@
  	   Filter	= require('bad-words'),
  	   filter 	= new Filter(),
  	   {generateMessage, generateLocationMessage } = require('./utils/messages'),
+ 	   { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
  	   port		= process.env.PORT || 3000
 
 
